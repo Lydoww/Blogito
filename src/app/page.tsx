@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import User from "@/components/User";
+// import User from "@/components/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
@@ -12,11 +12,7 @@ export default async function Home() {
       <Link className={buttonVariants()} href="/admin">
         Go to your admin page.
       </Link>
-
-      <h2>Client Session</h2>
-      <User />
-      <h2>Server Session</h2>
-      {JSON.stringify(session)}
+      {/* <User /> */}
     </div>
   );
 }
