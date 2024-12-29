@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
-          id: `${existingUser.id}`,
+          id: `${existingUser.id}`, // Inclure l'ID utilisateur
           username: existingUser.username,
           email: existingUser.email,
         };
@@ -63,20 +63,27 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(token, user);
+      console.log("JWT Callback - Token:", token, "User:", user);
+
+      // Inclure `user.id` dans le token JWT lorsqu'un utilisateur est connecté
       if (user) {
         return {
           ...token,
+          id: user.id, // Ajouter l'ID utilisateur
           username: user.username,
         };
       }
       return token;
     },
     async session({ session, token }) {
+      console.log("Session Callback - Token:", token);
+
+      // Ajouter `token.id` dans `session.user.id`
       return {
         ...session,
         user: {
           ...session.user,
+          id: token.id, // Inclure l'ID utilisateur dans la session
           username: token.username,
         },
       };

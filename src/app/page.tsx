@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <div>
-      <h1 className="text-2xl">Home</h1>
+      <h1 className="text-2xl text-white">Home</h1>
       <Link className={buttonVariants()} href="/admin">
         Go to your admin page.
       </Link>

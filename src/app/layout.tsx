@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+      <body className="bg-slate-800"
       >
         <Provider >
         <main className="h-screen flex flex-col justify-center items-center">

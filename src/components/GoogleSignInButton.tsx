@@ -14,7 +14,7 @@ const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     }
   }
-    
+
 
   return (
     <Button disabled={isLoading} onClick={loginWithGoogle} className="w-full">
