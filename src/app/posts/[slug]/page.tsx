@@ -1,10 +1,11 @@
 import { db } from "@/lib/db";
 
 interface PostDetailsProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-const PostDetails = async ({ params }: PostDetailsProps) => {
+const PostDetails = async (props: PostDetailsProps) => {
+  const params = await props.params;
   // Attendez les paramètres correctement
   const slug = params?.slug;
 
@@ -38,7 +39,7 @@ const PostDetails = async ({ params }: PostDetailsProps) => {
         <h1 className="text-2xl font-bold">{post.title}</h1>
         <p className="text-gray-700">{post.content}</p>
         <p className="text-sm text-gray-500">
-          By {post.author?.name || "Unknown"} on{" "}
+          By {post.author?.name || post.author?.username} on{" "}
           {new Date(post.createdAt).toLocaleDateString()}
         </p>
       </div>

@@ -33,7 +33,7 @@ const PostsPage = () => {
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <h1 className="flex text-3xl font-bold mb-6 text-white justify-center">
-        All Posts
+        Recent Posts
       </h1>
       <ul className="space-y-4 flex flex-row space-x-10">
         {posts.map((post: any) => (
