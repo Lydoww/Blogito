@@ -15,13 +15,13 @@ const LandingPage = () => {
       <div className="min-h-screen flex flex-col">
         {/* Hero Section */}
         <header className="flex flex-col items-center justify-center flex-grow text-center px-4">
-          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-white py-16">
+          <h1 className="text-6xl md:text-8xl font-bold  text-white py-14">
             Welcome to{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
               Blogito
             </span>
           </h1>
-          <p className="text-xl font-semibold md:text-2xl max-w-3xl mb-8 text-white py-16">
+          <p className="text-xl font-semibold md:text-2xl max-w-3xl mb-12 text-white py-16">
             Share your ideas, connect with like-minded enthusiasts, and create
             inspiring content that impacts the world.
           </p>
