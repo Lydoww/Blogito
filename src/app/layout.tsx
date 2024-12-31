@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-slate-800"
+      <body className="bg-slate-800 "
       >
         <Provider >
         <main className="h-screen flex flex-col justify-center items-center">
