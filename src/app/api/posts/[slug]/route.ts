@@ -1,22 +1,21 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-// Fonction utilitaire pour extraire les paramètres dynamiques
-function getParams(req: Request) {
-  const url = new URL(req.url);
-  const slug = url.pathname.split("/").pop(); // Extrait le slug depuis l'URL
-  return slug;
-}
-
-// Gestion de la requête GET
-export async function GET(req: Request) {
-  const slug = getParams(req);
+export async function GET(
+  req: Request,
+  { params }: { params: { slug: string } }
+) {
+  const { slug } = params;
+  const session = await getServerSession(authOptions);
 
   if (!slug) {
-    return NextResponse.json(
-      { error: "Slug is missing" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Slug is missing" }, { status: 400 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
@@ -26,9 +25,13 @@ export async function GET(req: Request) {
     });
 
     if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    if (post.authorId !== session.user.id) {
       return NextResponse.json(
-        { error: "Post not found" },
-        { status: 404 }
+        { error: "You are not authorized to see this post" },
+        { status: 403 }
       );
     }
 
@@ -42,22 +45,44 @@ export async function GET(req: Request) {
   }
 }
 
-// Gestion de la requête DELETE
-export async function DELETE(req: Request) {
-  const slug = getParams(req);
+export async function DELETE(
+  req: Request,
+  { params }: { params: { slug: string } }
+) {
+  const { slug } = params;
+  const session = await getServerSession(authOptions);
 
   if (!slug) {
-    return NextResponse.json(
-      { error: "Slug is missing" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Slug is missing" }, { status: 400 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const post = await db.post.delete({ where: { slug } });
+    const post = await db.post.findUnique({
+      where: { slug },
+      include: { author: true },
+    });
+
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    if (post.authorId !== session.user.id) {
+      return NextResponse.json(
+        { error: "You are not authorized to delete this post" },
+        { status: 403 }
+      );
+    }
+
+    await db.post.delete({
+      where: { slug },
+    });
 
     return NextResponse.json(
-      { message: "Post deleted successfully", post },
+      { message: "Post deleted successfully" },
       { status: 200 }
     );
   } catch (error) {

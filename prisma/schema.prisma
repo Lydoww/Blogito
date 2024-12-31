@@ -74,6 +74,8 @@ model Post {
   title       String    @db.VarChar(255) 
   slug        String    @unique // Identifiant unique pour une URL-friendly
   content     String?   
+  imageUrl    String?   @db.VarChar(255) // Nouveau champ pour stocker l'URL de l'image
+  excerpt     String?   @db.VarChar(255) // Optionnel : Résumé de l'article
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

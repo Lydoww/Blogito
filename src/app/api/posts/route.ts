@@ -40,8 +40,6 @@ export async function GET() {
 
 
 // create a new post
-
-
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
