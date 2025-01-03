@@ -45,7 +45,7 @@ const PostDetails = async ({ params }: PostDetailsProps) => {
   const isAuthor = session?.user?.id === post.authorId;
 
   return (
-    <div className="container mx-auto p-8 max-w-4xl bg-gray-200 rounded-lg">
+    <div className="container mx-auto p-8 bg-gray-200 rounded-lg max-w-4xl mt-52">
       <h1 className="text-4xl font-extrabold text-indigo-600 mb-4">
         {post.title}
       </h1>

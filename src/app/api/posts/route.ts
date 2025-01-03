@@ -34,11 +34,6 @@ export async function GET() {
   }
 }
 
-// find a single post 
-
-
-
-
 // create a new post
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

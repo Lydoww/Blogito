@@ -1,6 +1,15 @@
-export type CreatePostInput = {
+// src/types/posts.d.ts
+
+export type PostType = {
+  id: number;
   title: string;
-  content?: string;
-  authorId: string;
   slug: string;
+  content?: string;
+  imageUrl?: string;
+  excerpt?: string;
+  published: boolean;
+  createdAt: string;
+  updatedAt: string;
+  authorId: string;
+  author?: { name: string; username: string };
 };
