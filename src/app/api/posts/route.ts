@@ -15,7 +15,21 @@ const postSchema = z.object({
 
 export async function GET() {
   try {
+    // Récupérer l'utilisateur connecté
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user || !session.user.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 } // Non autorisé si l'utilisateur n'est pas connecté
+      );
+    }
+
+    // Récupérer les articles de l'utilisateur connecté
     const posts = await db.post.findMany({
+      where: {
+        authorId: session.user.id, // Filtrer par l'ID de l'utilisateur
+      },
       include: {
         author: true,
       },

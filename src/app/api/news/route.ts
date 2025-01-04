@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     }
 
     const res = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&page=${page}&pageSize=${limit}`
+      `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${apiKey}&page=${page}&pageSize=${limit}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch news");
