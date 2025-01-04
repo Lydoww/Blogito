@@ -69,13 +69,13 @@ const EditPostPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
+    <div className="container mx-auto p-52">
+      <h1 className="flex text-2xl font-bold mb-4 text-white justify-center">Edit Post</h1>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium mb-2">
+        <label htmlFor="title" className="block text-sm font-medium mb-2 text-white">
           Title
         </label>
         <input
@@ -88,7 +88,7 @@ const EditPostPage: React.FC = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="content" className="block text-sm font-medium mb-2">
+        <label htmlFor="content" className="block text-sm font-medium mb-2 text-white">
           Content
         </label>
         <textarea
