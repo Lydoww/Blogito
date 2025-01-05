@@ -48,24 +48,32 @@ const SignUpForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: values.username,
-        email: values.email,
-        password: values.password,
-      }),
-    });
-
-    if (response.ok) {
+    try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+  
+      if (!response.ok) {
+        // Lire la réponse de l'API en cas d'erreur
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create account");
+      }
+  
+      // Redirection après succès
       router.push("/sign-in");
-    } else {
+    } catch (error: any) {
+      // Affiche l'erreur renvoyée par l'API
       toast({
         title: "Error",
-        description: "Oops! Something went wrong",
+        description: error.message || "Oops! Something went wrong",
         variant: "destructive",
       });
     }

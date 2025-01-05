@@ -30,10 +30,17 @@ const PostsPage = () => {
   if (loading) return <p className="text-white">Loading posts...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
+  if (posts.length === 0)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Link href="/posts/create" className="text-white text-3xl hover:scale-105 transition ease-in-out">Create your first post</Link>
+      </div>
+    );
+
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <h1 className="flex text-3xl font-bold mb-6 text-white justify-center">
-        Recent Posts
+        Your posts
       </h1>
       <ul className="space-y-4 flex flex-row space-x-10">
         {posts.map((post: any) => (
