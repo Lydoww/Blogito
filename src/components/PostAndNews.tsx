@@ -16,7 +16,7 @@ const PostsAndNews = ({ user }: { user: Session["user"] }) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch("http://localhost:3000/api/posts");
+      const res = await fetch("http://localhost:3000/api/posts/all");
       if (!res.ok) throw new Error("Failed to fetch posts");
       const data = await res.json();
       setPosts(data);

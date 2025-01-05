@@ -11,24 +11,18 @@ const postSchema = z.object({
   content: z.string().max(5000, "Content is too long").optional(),
 });
 
-// find all the posts
+// find all the posts of the user
 
 export async function GET() {
   try {
-    // Récupérer l'utilisateur connecté
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user || !session.user.id) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 } // Non autorisé si l'utilisateur n'est pas connecté
-      );
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
-    // Récupérer les articles de l'utilisateur connecté
     const posts = await db.post.findMany({
       where: {
-        authorId: session.user.id, // Filtrer par l'ID de l'utilisateur
+        authorId: session.user.id,
       },
       include: {
         author: true,
