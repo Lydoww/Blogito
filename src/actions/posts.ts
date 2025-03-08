@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
-import { CreatePostInput } from "@/types/posts";
-import { generateUniqueSlug  } from "@/utils/slug";
-
+import { PostType } from "@/types/posts";
+import { generateUniqueSlug } from "@/utils/slug";
 
 export async function getPosts(page: number = 1, pageSize: number = 10) {
   return await db.post.findMany({
@@ -30,7 +29,7 @@ export async function getPostWithAuthor(id: any) {
   });
 }
 
-export async function createPost(input: CreatePostInput) {
+export async function createPost(input: PostType["CreatePostInput"]) {
   console.log("CreatePostInput received:", input);
 
   const { title, content, authorId } = input;

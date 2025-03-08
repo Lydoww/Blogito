@@ -12,4 +12,5 @@ export type PostType = {
   updatedAt: string;
   authorId: string;
   author?: { name: string; username: string };
+  CreatePostInput: { title: string; content?: string; authorId: string };
 };
