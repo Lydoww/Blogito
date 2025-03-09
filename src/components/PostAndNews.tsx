@@ -67,6 +67,15 @@ const PostsAndNews = ({ user }: { user: Session["user"] }) => {
                         {new Date(post.createdAt).toLocaleDateString()}
                       </span>
                     </div>
+                    {/* Afficher les vues et les commentaires */}
+                    <div className="flex gap-4 mt-2">
+                      <span className="text-gray-400">
+                        👁️ {post.views?.length || 0} vues
+                      </span>
+                      <span className="text-gray-400">
+                        💬 {post.comments?.length || 0} commentaires
+                      </span>
+                    </div>
                   </Link>
                 </div>
               ))

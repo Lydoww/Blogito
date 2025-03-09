@@ -12,5 +12,12 @@ export type PostType = {
   updatedAt: string;
   authorId: string;
   author?: { name: string; username: string };
+  views?: { id: string; createdAt: string }[]; // Ajout des vues
+  comments?: {
+    id: string;
+    content: string;
+    createdAt: string;
+    user: { name: string; username: string };
+  }[]; // Ajout des commentaires
   CreatePostInput: { title: string; content?: string; authorId: string };
 };
