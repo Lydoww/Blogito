@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
+// GET - Récupérer un article avec ses vues et commentaires
 export async function GET(
   req: Request,
   { params }: { params: { slug: string } }
@@ -14,21 +15,26 @@ export async function GET(
     return NextResponse.json({ error: "Slug is missing" }, { status: 400 });
   }
 
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const post = await db.post.findUnique({
       where: { slug },
-      include: { author: true },
+      include: {
+        author: true,
+        views: true, // Inclure les vues
+        comments: {
+          include: {
+            user: true, // Inclure l'utilisateur qui a posté le commentaire
+          },
+        },
+      },
     });
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    if (post.authorId !== session.user.id) {
+    // Vérifier si l'utilisateur est autorisé à voir cet article
+    if (post.authorId !== session?.user?.id) {
       return NextResponse.json(
         { error: "You are not authorized to see this post" },
         { status: 403 }
@@ -45,6 +51,7 @@ export async function GET(
   }
 }
 
+// DELETE - Supprimer un article
 export async function DELETE(
   req: Request,
   { params }: { params: { slug: string } }
@@ -94,11 +101,12 @@ export async function DELETE(
   }
 }
 
+// PUT - Mettre à jour un article
 export async function PUT(
   req: Request,
   { params }: { params: { slug: string } }
 ) {
-  console.log('PUT request received');
+  console.log("PUT request received");
   const { slug } = params;
   const session = await getServerSession(authOptions);
 
@@ -122,7 +130,7 @@ export async function PUT(
 
     if (post.authorId !== session.user.id) {
       return NextResponse.json(
-        { error: "You are not authorized to upload this post" },
+        { error: "You are not authorized to update this post" },
         { status: 403 }
       );
     }
@@ -154,4 +162,3 @@ export async function PUT(
     );
   }
 }
-
